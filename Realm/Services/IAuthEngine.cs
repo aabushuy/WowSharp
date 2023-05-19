@@ -11,7 +11,8 @@
         byte[] M1 { get; }
         byte[] M2 { get; }
 
-        void CalculateB(string passwordHash);
+
+        void Init(string username, string passwordHashed);
 
         void CalculateSessionKey(byte[] a);
         void HashSessionKey();

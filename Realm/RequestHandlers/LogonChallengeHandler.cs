@@ -22,7 +22,7 @@ namespace Realm.RequestHandlers
         {
             var accountInfo = await _accountInfoRepository.GetAccountInfo(request.AccountName);
 
-            _authEngine.CalculateB(accountInfo.PasswordHash);
+            _authEngine.Init(accountInfo.Username, accountInfo.PasswordHash);
 
             request.UserContext[nameof(AccountInfo)] = accountInfo;
             request.UserContext[nameof(IAuthEngine)] = _authEngine;
