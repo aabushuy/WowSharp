@@ -1,0 +1,22 @@
+c: LogonChallengeRequest
+	AccountName
+	ClientBuild
+	
+s: LogonChallengeResponse
+	0x00 - CMD_AUTH_LOGON_CHALLENGE
+	0x00 - idk
+	0x00 - AUTH_LOGON_SUCCESS
+	
+	32 bytes - GetHostPublicEphemeral - PublicB
+	uint8 1 -- (byte)G.Length
+	g(7)
+	
+	uint8(32) - prime length
+	N(32 bytes) - _primeNumber
+	Salt(32 bytes)
+	VersionChallenge - std::array<uint8, 16> VersionChallenge 
+		= { { 0xBA, 0xA3, 0x1E, 0x99, 0xA0, 0x0B, 0x21, 0x57, 0xFC, 0x37, 0x3F, 0xB3, 0x69, 0xCD, 0xD2, 0xF1 } };
+	uint8(0) --securityFlags
+
+c: LogonProofRequest
+s: LogonProofResponse
