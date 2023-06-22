@@ -1,12 +1,16 @@
-﻿using Realm.Services;
+﻿using ConsoleAppTest;
 
 Console.WriteLine("Start");
 
-IAuthEngine _authEngine = new AuthEngine();
+UserManager userManager = new UserManager();
 
 //qwer:123
 var passwordHash = "BCC8A524726544C45375256397848DFDF4E19C1B";
 
-_authEngine.CalculateB(passwordHash);
+var username = "qwer";
+var password = "123";
 
-Console.WriteLine(_authEngine.PublicB);
+userManager.CreateUser(username, password);
+
+
+Console.WriteLine("Stop");

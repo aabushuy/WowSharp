@@ -19,4 +19,5 @@ s: LogonChallengeResponse
 	uint8(0) --securityFlags
 
 c: LogonProofRequest
+
 s: LogonProofResponse
