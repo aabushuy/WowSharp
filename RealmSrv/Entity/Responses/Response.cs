@@ -2,9 +2,9 @@
 {
     internal abstract class Response
     {
-        protected readonly UserContext _userContext;
+        protected readonly UserSession _userContext;
 
-        public Response(UserContext userContext)
+        public Response(UserSession userContext)
         {
             _userContext = userContext;
         }

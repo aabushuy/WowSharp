@@ -1,4 +1,6 @@
 ﻿using RealmSrv.Entity;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace RealmSrv.Repository
 {
@@ -13,18 +15,26 @@ namespace RealmSrv.Repository
         }
 
         
-        public Task<Account?> GetAccount(string userName)
+        public Task<Account?> GetAccount(string username)
         {
-            var accountInfo = _accounts.FirstOrDefault(a => a.Username.ToUpper() == userName);
+            var accountInfo = _accounts.FirstOrDefault(a => a.Username == username);
 
             return Task.FromResult(accountInfo);
         }
 
-        public Task<Account> RegisterAccount(string userName, string password)
+        public Task<Account> RegisterAccount(string username, string password)
         {
+            username = username.ToUpper();
+            password = password.ToUpper();
+
+            var passwordStr = Encoding.ASCII.GetBytes(username + ":" + password);
+            var passwordHash = SHA1.HashData(passwordStr);
+            var hashStr = BitConverter.ToString(passwordHash).Replace("-", "");
+
             var acc = new Account()
             { 
-                Username = userName
+                Username = username,
+                PasswordHash = hashStr
             };
 
             return Task.FromResult(acc);

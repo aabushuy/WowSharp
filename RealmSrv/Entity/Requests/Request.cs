@@ -2,13 +2,13 @@
 {
     internal abstract class Request
     {
-        private readonly UserContext _userContext;
+        private readonly UserSession _session;
 
-        public UserContext User => _userContext;
+        public UserSession Session => _session;
 
-        public Request(UserContext userContext)
+        public Request(UserSession session)
         {
-            _userContext = userContext;
+            _session = session;
         }
 
         public abstract Task Read();

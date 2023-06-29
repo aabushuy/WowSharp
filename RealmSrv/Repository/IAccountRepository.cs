@@ -4,8 +4,8 @@ namespace RealmSrv.Repository
 {
     internal interface IAccountRepository
     {
-        Task<Account?> GetAccount(string userName);
+        Task<Account?> GetAccount(string username);
 
-        Task<Account> RegisterAccount(string userName, string password);
+        Task<Account> RegisterAccount(string username, string password);
     }
 }

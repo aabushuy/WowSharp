@@ -1,4 +1,5 @@
 ﻿using RealmSrv.Repository;
+using RealmSrv.Services;
 using System.Reflection;
 
 namespace RealmSrv.Extentions
@@ -12,9 +13,10 @@ namespace RealmSrv.Extentions
 
         private static IServiceCollection AddLocalServices(this IServiceCollection services)
         {
+            services.AddTransient<IAuthEngine, AuthEngine>();
+
             //TODO: as Transient!
             services.AddSingleton<IAccountRepository, AccountRepository>();
-
 
             return services;
         }

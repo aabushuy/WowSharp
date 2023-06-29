@@ -10,7 +10,7 @@ namespace RealmSrv.Entity.Responses
         public byte[] Salt { get; set; }
         public byte[] VersionChallenge { get; init; }
 
-        public LogonChallengeResponse(UserContext userContext) : base(userContext)
+        public LogonChallengeResponse(UserSession userContext) : base(userContext)
         {
         }
 
@@ -31,8 +31,6 @@ namespace RealmSrv.Entity.Responses
             await _userContext.WriteByteArrayAsync(Salt);
             await _userContext.WriteByteArrayAsync(VersionChallenge);
             await _userContext.WriteZeroByte(1);
-
-            await _userContext.WriteZeroByte(20);
         }
     }
 }

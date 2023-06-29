@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.Extensions.Logging;
 using RealmSrv.Entity;
 using RealmSrv.Entity.Requests;
 using RealmSrv.Entity.Responses;
@@ -41,44 +42,50 @@ namespace RealmSrv
 
                 try
                 {
-                    var client = new UserContext(clientSocket, stoppingToken);
+                    var session = new UserSession(clientSocket, stoppingToken);
 
-                    await RunUserProcessing(client, stoppingToken);
+                    await RunUserProcessing(session, stoppingToken);
+                }
+                catch (SocketException exception) when (exception.SocketErrorCode == SocketError.ConnectionAborted)
+                {
+                    _logger.LogInformation("Connection aborted");
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex.Message);
                     _logger.LogDebug(ex.StackTrace);
                 }
+
+                _logger.LogInformation($"Connection closed {clientSocket.RemoteEndPoint}");
             }
         }
 
-        private async Task RunUserProcessing(UserContext userContext, CancellationToken cancellationToken)
+        private async Task RunUserProcessing(UserSession session, CancellationToken cancellationToken)
         {
-            while (userContext.IsAlive)
+            while (session.IsAlive)
             {
                 try
                 {
-                    await ProcessUserRequest(userContext, cancellationToken);
+                    await ProcessUserRequest(session, cancellationToken);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex.Message);
                     throw;
-                }                
-
-                Task.Delay(500, cancellationToken).Wait(cancellationToken);
+                }
             }
         }
 
-        private async Task ProcessUserRequest(UserContext userContext, CancellationToken cancellationToken)
+        private async Task ProcessUserRequest(UserSession session, CancellationToken cancellationToken)
         {
-            byte code = await userContext.ReadByteAsync();
+            _logger.LogInformation($"Waiting code");
+            byte code = await session.ReadByteAsync();            
+            _logger.LogInformation($"Start processing code: {code}");
+
             OperationCode operationCode = (OperationCode)code;
+            _logger.LogDebug($"Operation: {operationCode}");
 
-            Request request = CreateRequest(operationCode, userContext);
-
-            _logger.LogDebug($"Start processing {operationCode}");
+            Request request = CreateRequest(operationCode, session);
 
             try
             {
@@ -89,7 +96,7 @@ namespace RealmSrv
 
                 await ((Response)response).Write();
 
-                _logger.LogDebug($"Processed {operationCode}");
+                _logger.LogDebug($"Operation: {operationCode} completed");
             }
             catch (Exception ex)
             {
@@ -98,10 +105,11 @@ namespace RealmSrv
             }
         }
 
-        private static Request CreateRequest(OperationCode operationCode, UserContext context) 
+        private static Request CreateRequest(OperationCode operationCode, UserSession session) 
             => operationCode switch
         {
-            OperationCode.AuthLogonChallenge => new LogonChallengeRequest(context),
+            OperationCode.AuthLogonChallenge => new LogonChallengeRequest(session),
+            OperationCode.AuthLogonProof => new LogonProofRequest(session),
 
             _ => throw new InvalidOperationException($"Unknown operation code {operationCode}")
         };

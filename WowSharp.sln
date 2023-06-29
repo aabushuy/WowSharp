@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{CE2A538A-A286-4719-8AF4-AB9A6D180A72}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{45FEF7D5-9799-4A17-A794-FD0F39C59C0F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealmSrv", "RealmSrv\RealmSrv.csproj", "{D0C87502-AD37-4583-84D5-DF3BF17703F7}"
 EndProject
 Global

@@ -3,6 +3,9 @@ using RealmSrv.Entity;
 using RealmSrv.Entity.Requests;
 using RealmSrv.Entity.Responses;
 using RealmSrv.Repository;
+using RealmSrv.Services;
+using System.Globalization;
+using System.Text;
 
 namespace RealmSrv.Handlers
 {
@@ -17,14 +20,34 @@ namespace RealmSrv.Handlers
 
         public async Task<LogonChallengeResponse> Handle(LogonChallengeRequest request, CancellationToken cancellationToken)
         {
-            UserContext user = request.User;
+            UserSession session = request.Session;
+            IAuthEngine auth = session.Auth;
 
-            user.AccountInfo = await _accountRepository.GetAccount(request.AccountName)
+            session.AccountInfo = await _accountRepository.GetAccount(request.AccountName)
                 ?? throw new InvalidOperationException("No such user name");
 
-            return new LogonChallengeResponse(user)
+            auth.CalculateX(
+                Encoding.UTF8.GetBytes(session.AccountInfo.Username),
+                GetBytesFromPasswordHash(session.AccountInfo.PasswordHash));
+
+            return new LogonChallengeResponse(session)
             {
+                B = auth.PublicB,
+                Generator = auth.G,
+                PrimeNumber = auth.N,
+                Salt = auth.Salt,
+                VersionChallenge = auth.CrcSalt
             };
+        }
+
+        private byte[] GetBytesFromPasswordHash(string passwordHash)
+        {
+            var hash = new byte[20];
+
+            for (var i = 0; i < 40; i += 2)
+                hash[i / 2] = byte.Parse(passwordHash.AsSpan(i, 2), NumberStyles.HexNumber);
+
+            return hash;
         }
     }
 }
