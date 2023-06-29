@@ -1,14 +1,9 @@
 ﻿namespace RealmSrv.Entity.Requests
 {
-    internal abstract class Request
+    internal abstract class Request : RequestResponse
     {
-        private readonly UserSession _session;
-
-        public UserSession Session => _session;
-
-        public Request(UserSession session)
+        protected Request(UserSession session) : base(session)
         {
-            _session = session;
         }
 
         public abstract Task Read();

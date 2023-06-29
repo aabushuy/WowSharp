@@ -5,13 +5,15 @@ namespace RealmSrv.Entity.Requests
 {
     internal class RealmListRequest : Request, IRequest<RealmListResponse>
     {
+        public byte[] Unk { get; private set; }
+
         public RealmListRequest(UserSession session) : base(session)
         {
         }
 
-        public override Task Read()
+        public override async Task Read()
         {
-            throw new NotImplementedException();
+            Unk = await Session.ReadByteArrayAsync(4);
         }
     }
 }

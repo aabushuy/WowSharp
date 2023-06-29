@@ -110,6 +110,10 @@ namespace RealmSrv
         {
             OperationCode.AuthLogonChallenge => new LogonChallengeRequest(session),
             OperationCode.AuthLogonProof => new LogonProofRequest(session),
+            OperationCode.AuthReconnectChallenge => new LogonChallengeRequest(session),
+            OperationCode.AuthReconnectProof => new LogonProofRequest(session),
+
+            OperationCode.AuthRealmList => new RealmListRequest(session),
 
             _ => throw new InvalidOperationException($"Unknown operation code {operationCode}")
         };

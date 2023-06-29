@@ -1,12 +1,9 @@
 ﻿namespace RealmSrv.Entity.Responses
 {
-    internal abstract class Response
+    internal abstract class Response : RequestResponse
     {
-        protected readonly UserSession _userContext;
-
-        public Response(UserSession userContext)
+        protected Response(UserSession session) : base(session)
         {
-            _userContext = userContext;
         }
 
         public abstract Task Write();

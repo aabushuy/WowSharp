@@ -112,6 +112,20 @@ namespace RealmSrv.Entity
                 _arrayPool.Return(buffer);
             }
         }
+
+        public async Task WriteFloat(float population)
+        {
+            var buffer = _arrayPool.Rent(sizeof(float));
+            try
+            {
+                BitConverter.TryWriteBytes(buffer, population);
+                await WriteAsync(buffer, sizeof(float));
+            }
+            finally
+            {
+                _arrayPool.Return(buffer);
+            }
+        }
         #endregion
 
         private async Task ReadAsync(byte[] buffer, int length)

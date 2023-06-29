@@ -13,8 +13,9 @@ namespace RealmSrv.Extentions
 
         private static IServiceCollection AddLocalServices(this IServiceCollection services)
         {
-            services.AddTransient<IAuthEngine, AuthEngine>();
-
+            services.AddTransient<IAuthEngine, AuthEngine>();            
+            services.AddTransient<IRealmRepository, RealmRepository>();
+            
             //TODO: as Transient!
             services.AddSingleton<IAccountRepository, AccountRepository>();
 
