@@ -2,7 +2,7 @@
 {
     internal abstract class Request : RequestResponse
     {
-        protected Request(UserSession session) : base(session)
+        protected Request(UserContext userContext) : base(userContext)
         {
         }
 

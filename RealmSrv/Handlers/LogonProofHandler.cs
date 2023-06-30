@@ -11,7 +11,7 @@ namespace RealmSrv.Handlers
     {
         public Task<LogonProofResponse> Handle(LogonProofRequest request, CancellationToken cancellationToken)
         {
-            UserSession session = request.Session;
+            UserContext session = request.UserContext;
             IAuthEngine auth = session.Auth;
 
             auth.CalculateU(request.A);

@@ -20,7 +20,7 @@ namespace RealmSrv.Handlers
 
         public async Task<LogonChallengeResponse> Handle(LogonChallengeRequest request, CancellationToken cancellationToken)
         {
-            UserSession session = request.Session;
+            UserContext session = request.UserContext;
             IAuthEngine auth = session.Auth;
 
             session.AccountInfo = await _accountRepository.GetAccount(request.AccountName)

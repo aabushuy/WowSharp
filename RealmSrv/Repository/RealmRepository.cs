@@ -8,7 +8,7 @@ namespace RealmSrv.Repository
         {
             var result = new List<Realm>() 
             { 
-                new Realm("Common", "localhost", 4545)
+                new Realm("Spring", "localhost", 4545)
             };
 
             return Task.FromResult(result as IList<Realm>);

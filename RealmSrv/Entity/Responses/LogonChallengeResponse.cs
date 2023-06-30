@@ -10,27 +10,27 @@ namespace RealmSrv.Entity.Responses
         public byte[] Salt { get; init; }
         public byte[] VersionChallenge { get; init; }
 
-        public LogonChallengeResponse(UserSession userContext) : base(userContext)
+        public LogonChallengeResponse(UserContext userContext) : base(userContext)
         {
         }
 
         public override async Task Write()
         {
             //header
-            await Session.WriteByteAsync((byte)OperationCode.AuthLogonChallenge);
-            await Session.WriteZeroByte(1);
-            await Session.WriteByteAsync((byte)AccountStates.LoginOK);
+            await UserContext.Writer.WriteByteAsync((byte)OperationCode.AuthLogonChallenge);
+            await UserContext.Writer.WriteZeroByte(1);
+            await UserContext.Writer.WriteByteAsync((byte)AccountStates.LoginOK);
             //body
-            await Session.WriteByteArrayAsync(B);
-            await Session.WriteByteAsync((byte)Generator.Length);
-            await Session.WriteByteAsync(Generator.First());
+            await UserContext.Writer.WriteByteArrayAsync(B);
+            await UserContext.Writer.WriteByteAsync((byte)Generator.Length);
+            await UserContext.Writer.WriteByteAsync(Generator.First());
 
-            await Session.WriteByteAsync(32);
-            await Session.WriteByteArrayAsync(PrimeNumber);
+            await UserContext.Writer.WriteByteAsync(32);
+            await UserContext.Writer.WriteByteArrayAsync(PrimeNumber);
 
-            await Session.WriteByteArrayAsync(Salt);
-            await Session.WriteByteArrayAsync(VersionChallenge);
-            await Session.WriteZeroByte(1);
+            await UserContext.Writer.WriteByteArrayAsync(Salt);
+            await UserContext.Writer.WriteByteArrayAsync(VersionChallenge);
+            await UserContext.Writer.WriteZeroByte(1);
         }
     }
 }

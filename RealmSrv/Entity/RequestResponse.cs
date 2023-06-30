@@ -2,13 +2,13 @@
 {
     internal abstract class RequestResponse
     {
-        private readonly UserSession _session;
+        private readonly UserContext _userContext;
 
-        public UserSession Session => _session;
+        public UserContext UserContext => _userContext;
 
-        public RequestResponse(UserSession session)
+        public RequestResponse(UserContext context)
         {
-            _session = session;
+            _userContext = context;
         }
     }
 }

@@ -10,19 +10,19 @@ namespace RealmSrv.Entity.Responses
 
         public byte[] M2 { get; init; }
 
-        public LogonProofResponse(UserSession userContext) : base(userContext)
+        public LogonProofResponse(UserContext userContext) : base(userContext)
         {
             M2 = Array.Empty<byte>();
         }
 
         public override async Task Write()
         {
-            await Session.WriteByteAsync((byte)OperationCode.AuthLogonProof);
-            await Session.WriteByteAsync((byte)AccountState);
+            await UserContext.Writer.WriteByteAsync((byte)OperationCode.AuthLogonProof);
+            await UserContext.Writer.WriteByteAsync((byte)AccountState);
 
-            await Session.WriteByteArrayAsync(M2);
-            await Session.WriteByteArrayAsync(_accountFlag);
-            await Session.WriteZeroByte(6);
+            await UserContext.Writer.WriteByteArrayAsync(M2);
+            await UserContext.Writer.WriteByteArrayAsync(_accountFlag);
+            await UserContext.Writer.WriteZeroByte(6);
         }
     }
 }

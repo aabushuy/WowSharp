@@ -1,6 +1,8 @@
-﻿using RealmSrv.Repository;
+﻿using RealmSrv.Network;
+using RealmSrv.Repository;
 using RealmSrv.Services;
 using System.Reflection;
+using WS.Tcp;
 
 namespace RealmSrv.Extentions
 {
@@ -13,7 +15,9 @@ namespace RealmSrv.Extentions
 
         private static IServiceCollection AddLocalServices(this IServiceCollection services)
         {
-            services.AddTransient<IAuthEngine, AuthEngine>();            
+            services.AddSingleton<ITcpServer, RealmTcpServer>();
+
+            services.AddTransient<IAuthEngine, AuthEngine>();
             services.AddTransient<IRealmRepository, RealmRepository>();
             
             //TODO: as Transient!

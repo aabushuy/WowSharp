@@ -7,13 +7,13 @@ namespace RealmSrv.Entity.Requests
     {
         public byte[] Unk { get; private set; }
 
-        public RealmListRequest(UserSession session) : base(session)
+        public RealmListRequest(UserContext session) : base(session)
         {
         }
 
         public override async Task Read()
         {
-            Unk = await Session.ReadByteArrayAsync(4);
+            Unk = await UserContext.Reader.ReadByteArrayAsync(4);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace RealmSrv.Entity.Requests
         public byte[] A { get; private set; }
         public byte[] M1 { get; private set; }
 
-        public LogonProofRequest(UserSession session) : base(session)
+        public LogonProofRequest(UserContext session) : base(session)
         {
             A = Array.Empty<byte>();
             M1 = Array.Empty<byte>();
@@ -16,10 +16,10 @@ namespace RealmSrv.Entity.Requests
 
         public override async Task Read()
         {
-            A = await Session.ReadByteArrayAsync(32);
-            M1 = await Session.ReadByteArrayAsync(20);
+            A = await UserContext.Reader.ReadByteArrayAsync(32);
+            M1 = await UserContext.Reader.ReadByteArrayAsync(20);
 
-            await Session.SkipBytes(22);
+            await UserContext.Reader.SkipBytes(22);
         }
     }
 }

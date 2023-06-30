@@ -16,7 +16,7 @@ namespace RealmSrv.Handlers
 
         public async Task<RealmListResponse> Handle(RealmListRequest request, CancellationToken cancellationToken)
         {
-            var session = request.Session;
+            var session = request.UserContext;
 
             var realms = await _realmRepository.GetRealmListForAccount(session.AccountInfo);
 

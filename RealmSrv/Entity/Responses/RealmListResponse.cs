@@ -9,7 +9,7 @@ namespace RealmSrv.Entity.Responses
 
         public List<Realm> RealmList { get; }
 
-        public RealmListResponse(UserSession userContext) : base(userContext)
+        public RealmListResponse(UserContext userContext) : base(userContext)
         {
             RealmList = new();
         }
@@ -24,33 +24,34 @@ namespace RealmSrv.Entity.Responses
 
             int responseBodyLength = 6 + (short)realmListLength + 2;
 
-            await Session.WriteByteAsync((byte)OperationCode.AuthRealmList);            
-            await Session.WriteByteAsync((byte)(responseBodyLength % 256));
-            await Session.WriteByteAsync((byte)(responseBodyLength / 256));
+            await UserContext.Writer.WriteByteAsync((byte)OperationCode.AuthRealmList);            
+            await UserContext.Writer.WriteByteAsync((byte)(responseBodyLength % 256));
+            await UserContext.Writer.WriteByteAsync((byte)(responseBodyLength / 256));
 
-            await Session.WriteByteArrayAsync(Unk);
-            await Session.WriteByteAsync((byte)RealmList.Count);
-            await Session.WriteZeroByte(1);
+            await UserContext.Writer.WriteByteArrayAsync(Unk);
+            await UserContext.Writer.WriteByteAsync((byte)RealmList.Count);
+            await UserContext.Writer.WriteZeroByte(1);
 
             foreach (var realm in RealmList)
             {
-                await Session.WriteByteAsync((byte)realm.Icon);
-                await Session.WriteByteAsync((byte)(realm.IsLocked ? 1 : 0));
-                await Session.WriteByteAsync((byte)realm.RealmFlags);
+                await UserContext.Writer.WriteByteAsync((byte)realm.Icon);
+                await UserContext.Writer.WriteByteAsync((byte)(realm.IsLocked ? 1 : 0));
+                await UserContext.Writer.WriteByteAsync((byte)realm.RealmFlags);
 
-                await Session.WriteByteArrayAsync(Encoding.UTF8.GetBytes(realm.Name));
-                await Session.WriteZeroByte(1);
+                await UserContext.Writer.WriteByteArrayAsync(Encoding.UTF8.GetBytes(realm.Name));
+                await UserContext.Writer.WriteZeroByte(1);
                 
-                await Session.WriteByteArrayAsync(Encoding.UTF8.GetBytes($"{realm.Address}:{realm.Port}"));
-                await Session.WriteZeroByte(1);
+                await UserContext.Writer.WriteByteArrayAsync(Encoding.UTF8.GetBytes($"{realm.Address}:{realm.Port}"));
+                await UserContext.Writer.WriteZeroByte(1);
 
-                await Session.WriteFloat(realm.Population);
-                await Session.WriteByteAsync((byte)realm.CharCount);
-                await Session.WriteByteAsync((byte)realm.Timezone);
-                await Session.WriteZeroByte(1);
+                await UserContext.Writer.WriteFloat(realm.Population);
+                await UserContext.Writer.WriteByteAsync((byte)realm.CharCount);
+                await UserContext.Writer.WriteByteAsync((byte)realm.Timezone);
+                await UserContext.Writer.WriteZeroByte(1);
             }
 
-            await Session.WriteByteAsync(2);
+            await UserContext.Writer.WriteByteAsync(2);
+            await UserContext.Writer.WriteByteAsync(0);
         }
     }
 }

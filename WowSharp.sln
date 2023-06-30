@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{CE2A538A-A286-4719-8AF4-AB9A6D180A72}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealmSrv", "RealmSrv\RealmSrv.csproj", "{D0C87502-AD37-4583-84D5-DF3BF17703F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{A57B036C-FC28-4086-951E-CE50E2E0E72B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{83003B6A-F163-40D7-A216-91422A46DE75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Tcp", "WS.Tcp\WS.Tcp.csproj", "{C65D1538-2F0A-488B-A5D0-0308F3EBA9E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WS.Domain", "WS.Domain\WS.Domain.csproj", "{1755DD38-76D0-4E9F-A0EB-2CF49F91F5EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +23,25 @@ Global
 		{D0C87502-AD37-4583-84D5-DF3BF17703F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C87502-AD37-4583-84D5-DF3BF17703F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C87502-AD37-4583-84D5-DF3BF17703F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A57B036C-FC28-4086-951E-CE50E2E0E72B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A57B036C-FC28-4086-951E-CE50E2E0E72B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A57B036C-FC28-4086-951E-CE50E2E0E72B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A57B036C-FC28-4086-951E-CE50E2E0E72B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65D1538-2F0A-488B-A5D0-0308F3EBA9E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65D1538-2F0A-488B-A5D0-0308F3EBA9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65D1538-2F0A-488B-A5D0-0308F3EBA9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65D1538-2F0A-488B-A5D0-0308F3EBA9E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1755DD38-76D0-4E9F-A0EB-2CF49F91F5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1755DD38-76D0-4E9F-A0EB-2CF49F91F5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1755DD38-76D0-4E9F-A0EB-2CF49F91F5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1755DD38-76D0-4E9F-A0EB-2CF49F91F5EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D0C87502-AD37-4583-84D5-DF3BF17703F7} = {CE2A538A-A286-4719-8AF4-AB9A6D180A72}
+		{C65D1538-2F0A-488B-A5D0-0308F3EBA9E6} = {83003B6A-F163-40D7-A216-91422A46DE75}
+		{1755DD38-76D0-4E9F-A0EB-2CF49F91F5EA} = {83003B6A-F163-40D7-A216-91422A46DE75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D1BE997-0763-4FB3-BAB5-A022E4F8D501}

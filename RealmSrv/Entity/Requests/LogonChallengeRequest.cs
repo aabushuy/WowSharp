@@ -8,21 +8,21 @@ namespace RealmSrv.Entity.Requests
         public string AccountName { get; private set; }
         public int ClientBuild { get; private set; }
 
-        public LogonChallengeRequest(UserSession userContext) : base(userContext)
+        public LogonChallengeRequest(UserContext userContext) : base(userContext)
         {
         }
 
         public override async Task Read()
         {
-            await Session.SkipBytes(10);
+            await UserContext.Reader.SkipBytes(10);
 
-            ClientBuild = await Session.ReadIntAsync();
+            ClientBuild = await UserContext.Reader.ReadIntAsync();
 
-            await Session.SkipBytes(20);
+            await UserContext.Reader.SkipBytes(20);
 
-            var accountLength = await Session.ReadByteAsync();
+            var accountLength = await UserContext.Reader.ReadByteAsync();
 
-            AccountName = await Session.ReadStringAsync(accountLength);
+            AccountName = await UserContext.Reader.ReadStringAsync(accountLength);
         }
     }
 }

@@ -1,6 +1,6 @@
 using WS.Tcp;
 
-namespace RealmSrv
+namespace GameServer
 {
     public class Worker : BackgroundService
     {
@@ -17,12 +17,12 @@ namespace RealmSrv
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            string endPoint = _configuration["RealmInstace:Endpoint"];
+            string endPoint = _configuration["GameInstance:Endpoint"];
             try
             {
                 await _tcpServer.Run(endPoint, stoppingToken);
 
-                _logger.LogInformation($"Realm server started at {endPoint}");
+                _logger.LogInformation($"Game server started at {endPoint}");
             }
             catch (Exception ex)
             {
@@ -30,7 +30,7 @@ namespace RealmSrv
                 _logger.LogDebug(ex.StackTrace);
             }
 
-            _logger.LogInformation($"Realm server stopped");
+            _logger.LogInformation($"Game server stopped");
         }
     }
 }
