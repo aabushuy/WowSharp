@@ -7,5 +7,7 @@
         Task<byte[]> ReadByteArrayAsync(int length);        
         Task<string> ReadStringAsync(int length);
         Task SkipBytes(int count);
+
+        Task ReadByteArrayAsync(Memory<byte> buffer);
     }
 }

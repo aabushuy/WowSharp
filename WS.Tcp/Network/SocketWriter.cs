@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Buffers.Binary;
+using System.Net.Sockets;
 
 namespace WS.Tcp.Network
 {

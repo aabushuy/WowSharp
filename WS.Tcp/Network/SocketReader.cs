@@ -69,14 +69,24 @@ namespace WS.Tcp.Network
             _arrayPool.Return(buffer);
         }
 
+        public async Task ReadByteArrayAsync(Memory<byte> buffer)
+        {
+            await ReadAsync(buffer, buffer.Length);
+        }
+
         private async Task ReadAsync(byte[] buffer, int length)
+        {
+            await ReadAsync(buffer.AsMemory(0, length), length);
+        }
+
+        private async Task ReadAsync(Memory<byte> buffer, int length)
         {
             if (length == 0)
             {
                 return;
             }
 
-            var number = await _socket.ReceiveAsync(buffer.AsMemory(0, length), SocketFlags.None, _cancellationToken);
+            var number = await _socket.ReceiveAsync(buffer, SocketFlags.None, _cancellationToken);
             if (number != length)
             {
                 throw new InvalidOperationException($"Unexpected read bytes number {number}(expected {length})");

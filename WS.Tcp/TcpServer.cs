@@ -7,7 +7,7 @@ namespace WS.Tcp
 {
     public abstract class TcpServer : ITcpServer
     {
-        private readonly ILogger<TcpServer> _logger;
+        protected readonly ILogger<TcpServer> _logger;
 
         public TcpServer(ILogger<TcpServer> logger)
         {

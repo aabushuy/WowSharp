@@ -1,4 +1,5 @@
-﻿using GameServer.Network;
+﻿using GameServer.Factory;
+using GameServer.Network;
 using System.Reflection;
 using WS.Tcp;
 using WS.Tcp.Extentions;
@@ -16,6 +17,8 @@ namespace GameServer.Extentions
         private static IServiceCollection AddLocalServices(this IServiceCollection services)
         {
             services.AddSingleton<ITcpServer, GameTcpServer>();
+
+            services.AddTransient<IRequestFactory, RequestFactory>();
 
             return services;
         }
